@@ -29,3 +29,5 @@ jobs:
           goversion: 'https://dl.google.com/go/go1.19.4.linux-amd64.tar.gz'
           binary_name: 'memcache'
           extra_files: LICENSE README.md
+          md5sum: false
+          sha256sum: true
