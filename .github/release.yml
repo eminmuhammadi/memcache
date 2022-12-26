@@ -1,6 +1,6 @@
 on:
   release:
-    types: [published]
+    types: [created]
 
 jobs:
   releases-matrix:
@@ -21,11 +21,11 @@ jobs:
       - uses: actions/checkout@v3
       - uses: wangyoucao577/go-release-action@v1.34
         with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
           build_flags: -tags="github.com/eminmuhammadi/memcache"
-          ldflags: -w -s -X main.VERSION=${{ github.event.release.tag_name }} -X main.BUILD_TIME=$BUILD_TIME -X main.BUILD_ID=${{ github.sha }}
+          ldflags: -w -s -X main.VERSION="${{ github.event.release.tag_name }}" -X main.BUILD_TIME="${{ env.BUILD_TIME }}" -X main.BUILD_ID="${{ github.sha }}"
           goversion: 'https://dl.google.com/go/go1.19.4.linux-amd64.tar.gz'
           binary_name: 'memcache'
           extra_files: LICENSE README.md
