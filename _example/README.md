@@ -1,8 +1,9 @@
-# HTTP server using Memcache 
+# HTTP server using Memcache
 
-This example shows how to use the [memcache](https://github.com/eminmuhammadi/memcache) to cache the response of a reverse proxy.
+This example shows how to use the [memcache](https://github.com/eminmuhammadi/memcache) to cache the response of the Fibonacci sequence.
 
 ## Usage
+
 ```bash
 $ time curl -L -X GET '127.0.0.1:3000'
 [1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711
