@@ -1,4 +1,4 @@
-#/bin/env bash
+#!/bin/env bash
 
 BUILD_TIME=$(date +%Y%m%d%H%M%S)
 BUILD_ID=$(git rev-parse HEAD)
