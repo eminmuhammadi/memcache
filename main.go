@@ -38,7 +38,7 @@ func main() {
 
 	app := &cli.App{
 		Name:      "memcache",
-		Usage:     "http based in memory cache server written in Golang.",
+		Usage:     "http/https based in memory cache server written in Golang.",
 		Version:   VERSION,
 		Copyright: "memcache  Copyright (C) 2022  Emin Muhammadi",
 		Authors:   Authors,
