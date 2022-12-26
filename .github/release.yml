@@ -1,0 +1,31 @@
+on:
+  release:
+    types: [published]
+
+jobs:
+  releases-matrix:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, windows, darwin]
+        goarch: ['386', amd64, arm64]
+        exclude:
+          - goarch: '386'
+            goos: darwin
+          - goarch: arm64
+            goos: windows
+    steps:
+      - name: Set BUILD_TIME env
+        run: echo BUILD_TIME=$(date +%Y%m%d%H%M%S) >> ${GITHUB_ENV}
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1.34
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          build_flags: -tags="github.com/eminmuhammadi/memcache"
+          ldflags: -w -s -X main.VERSION=${{ github.event.release.tag_name }} -X main.BUILD_TIME=$BUILD_TIME -X main.BUILD_ID=${{ github.sha }}
+          goversion: 'https://dl.google.com/go/go1.19.4.linux-amd64.tar.gz'
+          binary_name: 'memcache'
+          extra_files: LICENSE README.md
