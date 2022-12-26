@@ -4,6 +4,18 @@ Fast, simple, in-memory key-value caching using HTTP/HTTPS.
 
 Note: All values are stored as strings in utf-8 encoding.
 
+## Installation
+
+### Download binary from GitHub
+
+Go to [https://github.com/eminmuhammadi/memcache/releases/latest](https://github.com/eminmuhammadi/memcache/releases/latest) page and download the binary for your operating system.
+
+### Install from source
+
+```bash
+git clone https://github.com/eminmuhammadi/memcache && cd memcache && chmod +x ./install.sh && ./install.sh
+```
+
 ## Simple Usage
 
 ```bash
