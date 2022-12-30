@@ -1,8 +1,8 @@
 # memcache
 
 [![Codacy Security Scan](https://github.com/eminmuhammadi/memcache/actions/workflows/codacy.yml/badge.svg?branch=main)](https://github.com/eminmuhammadi/memcache/actions/workflows/codacy.yml)
-
 [![CodeQL](https://github.com/eminmuhammadi/memcache/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/eminmuhammadi/memcache/actions/workflows/codeql.yml)
+
 
 Fast, simple, in-memory key-value caching using HTTP/HTTPS.
 
