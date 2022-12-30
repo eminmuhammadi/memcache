@@ -1,13 +1,15 @@
 package main
 
 import (
+	"math/rand"
 	"os"
+	"time"
 
 	cmd "github.com/eminmuhammadi/memcache/cmd"
 	"github.com/urfave/cli"
 )
 
-var VERSION = "1.0.0-dev"
+var VERSION = "1.0.1-dev"
 var BUILD_ID = "0"
 var BUILD_TIME = "0"
 
@@ -32,6 +34,8 @@ const banner = `
 `
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
+
 	if os.Getenv("MEMCACHE_DISABLE_BANNER") == "" {
 		println(banner)
 	}

@@ -16,13 +16,17 @@ jobs:
     steps:
       - name: Set BUILD_TIME env
         run: echo BUILD_TIME=$(date +%Y%m%d%H%M%S) >> ${GITHUB_ENV}
+      - name: Enable CGO
+        run: echo CGO_ENABLED=1 >> ${GITHUB_ENV}
+      - name: Enable Go Modules
+        run: echo GO111MODULE=on >> ${GITHUB_ENV}
       - uses: actions/checkout@v3
       - uses: wangyoucao577/go-release-action@v1.34
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
-          build_flags: -tags="github.com/eminmuhammadi/memcache"
+          build_flags: -tags="sqlite_userauth"
           ldflags: -w -s -X main.VERSION="${{ github.event.release.tag_name }}" -X main.BUILD_TIME="${{ env.BUILD_TIME }}" -X main.BUILD_ID="${{ github.sha }}"
           goversion: 'https://dl.google.com/go/go1.19.4.linux-amd64.tar.gz'
           binary_name: 'memcache'

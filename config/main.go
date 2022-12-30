@@ -1,5 +1,7 @@
 package config
 
+import "fmt"
+
 type Config struct {
 	// DBPath is the path to sqlite.
 	DBPath string
@@ -31,8 +33,16 @@ type Config struct {
 	Prefork bool
 }
 
+var __USERNAME__ = RandomString()
+var __PASSWORD__ = RandomString()
+var __SALT__ = RandomString()
+
 var DefaultConfig = Config{
-	DBPath:                "file::memory:?cache=shared&_pragma=foreign_keys(1)",
+	DBPath: fmt.Sprintf(
+		"file::memory:?mode=memory&cache=shared&_auth&_auth_user=%s&_auth_pass=%s&_auth_salt=%s&_auth_crypt=sha512",
+		__USERNAME__,
+		__PASSWORD__,
+		__SALT__),
 	Timezone:              "UTC",
 	LogLevel:              "SILENT",
 	EnablePrintRoutes:     false,
