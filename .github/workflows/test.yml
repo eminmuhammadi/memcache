@@ -12,11 +12,19 @@ jobs:
         run: echo CGO_ENABLED=1 >> ${GITHUB_ENV}
       - name: Enable Go Modules
         run: echo GO111MODULE=on >> ${GITHUB_ENV}
+      - name: Set Version
+        run: echo VERSION=0.0.0-test >> ${GITHUB_ENV}
+      - name: Set Build ID
+        run: echo BUILD_ID=GITHUB_ENV >> ${GITHUB_ENV}
+      - name: Set Build Time
+        run: echo BUILD_TIME=00000000000000 >> ${GITHUB_ENV}
       - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
       - uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: go get -u && go mod tidy
       - name: Install Memcache
-        run: bash ${GITHUB_WORKSPACE}/install.sh
+        run: go install -v -tags="sqlite_userauth" -ldflags "-w -s -X main.VERSION=$VERSION -X main.BUILD_TIME=$BUILD_TIME -X main.BUILD_ID=$BUILD_ID"
       - name: Test package
         run: memcache --help
