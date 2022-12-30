@@ -16,6 +16,8 @@ Go to [https://github.com/eminmuhammadi/memcache/releases/latest](https://github
 git clone https://github.com/eminmuhammadi/memcache && cd memcache && chmod +x ./install.sh && ./install.sh
 ```
 
+Note: GCC is required to build from source.
+
 ## Simple Usage
 
 ```bash

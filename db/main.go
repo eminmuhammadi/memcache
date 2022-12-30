@@ -4,7 +4,7 @@ import (
 	"time"
 
 	config "github.com/eminmuhammadi/memcache/config"
-	sqlite "github.com/glebarez/sqlite"
+	sqlite "gorm.io/driver/sqlite"
 	gorm "gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
