@@ -30,15 +30,18 @@ func Stop() cli.Command {
 
 // Kills the memcache server gracefully.
 func killServer() error {
-	process, err := getServerProcess()
+	processes, err := getServerProcess()
 	// Find the pid of the server
 	if err != nil {
 		return err
 	}
 
 	// Kill the server gracefully
-	if err := sendSignal(process); err != nil {
-		return err
+	for _, process := range processes {
+		err = sendSignal(process)
+		if err != nil {
+			return err
+		}
 	}
 
 	println(fmt.Sprintf("%s Memcache is shutting down", _dbPackage.TimeNowString()))
@@ -47,12 +50,12 @@ func killServer() error {
 }
 
 // Returns the process of the memcache server.
-func getServerProcess() (os.Process, error) {
+func getServerProcess() ([]os.Process, error) {
 	// The name of the executable
 	var executable string = EXECUTABLE_NAME
 
 	// The process of the server
-	var memcacheProcess os.Process
+	var memcacheProcess []os.Process
 
 	if runtime.GOOS == "windows" {
 		executable = fmt.Sprintf("%s.exe", executable)
@@ -65,14 +68,13 @@ func getServerProcess() (os.Process, error) {
 	}
 
 	for _, process := range processes {
-		if process.Executable() == executable {
-			memcacheProcess.Pid = process.Pid()
-			break
+		if process.Executable() == executable && process.Pid() != os.Getpid() {
+			memcacheProcess = append(memcacheProcess, os.Process{Pid: process.Pid()})
 		}
 	}
 
-	if memcacheProcess.Pid == 0 {
-		return memcacheProcess, fmt.Errorf("%s is not running", executable)
+	if len(memcacheProcess) == 0 {
+		return memcacheProcess, fmt.Errorf("no memcache server is running")
 	}
 
 	return memcacheProcess, nil
