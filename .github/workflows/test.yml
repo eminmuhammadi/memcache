@@ -32,5 +32,10 @@ jobs:
       - name: Start Memcache (Windows)
         if: ${{ matrix.os == 'windows-latest' }}
         run: cmd /c "START /b memcache start --hostname 127.0.0.1 --port 32080"
+      - name: Test Healthcheck
+        run: curl -L -X GET http://127.0.0.1:32080/_/healthcheck
       - name: Stop Memcache
         run: memcache stop
+      - name: Test Healthcheck (should fail)
+        run: curl -L -X GET http://127.0.0.1:32080/_/healthcheck
+        continue-on-error: true
