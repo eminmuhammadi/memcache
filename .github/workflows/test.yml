@@ -26,5 +26,7 @@ jobs:
         run: go get -u && go mod tidy
       - name: Install Memcache
         run: go install -v -tags="sqlite_userauth" -ldflags "-w -s -X main.VERSION=$VERSION -X main.BUILD_TIME=$BUILD_TIME -X main.BUILD_ID=$BUILD_ID"
-      - name: Test Memcache
-        run: memcache --help
+      - name: Start Memcache
+        run: memcache start --hostname 127.0.0.1 --port 32080
+      - name: Stop Memcache
+        run: memcache stop

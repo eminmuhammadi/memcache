@@ -3,9 +3,12 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"runtime"
+	"strconv"
 	"syscall"
 
+	_dbPackage "github.com/eminmuhammadi/memcache/db"
 	ps "github.com/mitchellh/go-ps"
 	"github.com/urfave/cli"
 )
@@ -34,7 +37,13 @@ func killServer() error {
 	}
 
 	// Kill the server gracefully
-	return sendSignal(process)
+	if err := sendSignal(process); err != nil {
+		return err
+	}
+
+	println(fmt.Sprintf("%s Memcache is shutting down", _dbPackage.TimeNowString()))
+
+	return nil
 }
 
 // Returns the process of the memcache server.
@@ -73,19 +82,9 @@ func getServerProcess() (os.Process, error) {
 func sendSignal(process os.Process) error {
 	// TODO: Find a better way to kill the process
 	if runtime.GOOS == "windows" {
-		dll, err := syscall.LoadDLL("kernel32.dll")
-		if err != nil {
-			return err
-		}
-
-		proc, err := dll.FindProc("GenerateConsoleCtrlEvent")
-		if err != nil {
-			return err
-		}
-
-		_, _, err = proc.Call(uintptr(syscall.CTRL_C_EVENT), uintptr(process.Pid))
-
-		return err
+		// cmd exec taskkill /F /PID 1234
+		cmd := exec.Command("taskkill", "/F", "/PID", strconv.Itoa(process.Pid))
+		return cmd.Run()
 	}
 
 	return process.Signal(syscall.SIGTERM)
