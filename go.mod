@@ -41,6 +41,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
+	github.com/mitchellh/go-ps v1.0.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/urfave/cli v1.22.10
 	golang.org/x/sys v0.3.0 // indirect

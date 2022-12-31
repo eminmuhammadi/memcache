@@ -8,14 +8,19 @@ import (
 )
 
 const (
+	// Memcache http endpoint
+	// memcache start --hostname 127.0.0.1 --port 8080
 	MEMCACHE_ENDPOINT = "http://127.0.0.1:8080"
-	HOSTNAME          = "127.0.0.1"
-	PORT              = 3000
+	// App hostname
+	HOSTNAME = "127.0.0.1"
+	// App port
+	PORT = 3000
 
 	// Fibonacci sequence length
 	N = 46
 )
 
+// Memcache cache id
 var MEMCACHE_CACHE_ID string = ""
 
 func main() {
@@ -46,13 +51,13 @@ func generateFibonacciSequence(n int) string {
 func handler(w http.ResponseWriter, r *http.Request) {
 	if MEMCACHE_CACHE_ID == "" {
 		data := map[string]string{"value": generateFibonacciSequence(N)}
-		json_data, err := json.Marshal(data)
+		jsonData, err := json.Marshal(data)
 		if err != nil {
 			fmt.Fprintf(w, "Error: %s", err)
 			return
 		}
 
-		res, err := http.Post(MEMCACHE_ENDPOINT, "application/json", bytes.NewBuffer(json_data))
+		res, err := http.Post(MEMCACHE_ENDPOINT, "application/json", bytes.NewBuffer(jsonData))
 		if err != nil {
 			fmt.Fprintf(w, "Error: %s", err)
 			return

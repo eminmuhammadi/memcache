@@ -9,6 +9,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
+// It is a function that opens the database connection.
 func Open() (*gorm.DB, error) {
 	db, err := gorm.Open(
 		sqlite.Open(config.DefaultConfig.DBPath),
@@ -29,6 +30,7 @@ func Open() (*gorm.DB, error) {
 	return db, nil
 }
 
+// It is a function that closes the database connection.
 func Close(db *gorm.DB) error {
 	sqlDB, err := db.DB()
 

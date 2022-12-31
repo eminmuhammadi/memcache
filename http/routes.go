@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// CreateRoutes is a function that creates the routes.
 func CreateRoutes(db *gorm.DB, app *fiber.App) {
 	// =======================================
 	//	GET /:id

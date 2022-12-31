@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Cache is a struct that represents the cache table.
 type Cache struct {
 	ID    string `gorm:"<-:create,type:uuid;primary_key" json:"id"`
 	Value string `gorm:"type:text;not null" json:"value"`

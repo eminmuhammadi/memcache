@@ -13,9 +13,9 @@ jobs:
       - name: Enable Go Modules
         run: echo GO111MODULE=on >> ${GITHUB_ENV}
       - name: Set Version
-        run: echo VERSION=0.0.0-test >> ${GITHUB_ENV}
+        run: echo VERSION=0.0.0-githubtest >> ${GITHUB_ENV}
       - name: Set Build ID
-        run: echo BUILD_ID=GITHUB_ENV >> ${GITHUB_ENV}
+        run: echo BUILD_ID=${{github.sha}} >> ${GITHUB_ENV}
       - name: Set Build Time
         run: echo BUILD_TIME=00000000000000 >> ${GITHUB_ENV}
       - uses: actions/setup-go@v3
@@ -26,5 +26,5 @@ jobs:
         run: go get -u && go mod tidy
       - name: Install Memcache
         run: go install -v -tags="sqlite_userauth" -ldflags "-w -s -X main.VERSION=$VERSION -X main.BUILD_TIME=$BUILD_TIME -X main.BUILD_ID=$BUILD_ID"
-      - name: Test package
+      - name: Test Memcache
         run: memcache --help

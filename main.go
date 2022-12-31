@@ -9,14 +9,22 @@ import (
 	"github.com/urfave/cli"
 )
 
-var VERSION = "1.0.1-dev"
+// VERSION is the current version of the application.
+var VERSION = "1.0.2-dev"
+
+// BUILD_ID is the build id of the application.
 var BUILD_ID = "0"
+
+// BUILD_TIME is the build time of the application.
 var BUILD_TIME = "0"
 
+// Commands is the list of commands for the application.
 var Commands = []cli.Command{
 	cmd.Start(),
+	cmd.Stop(),
 }
 
+// Authors is the list of authors for the application.
 var Authors = []cli.Author{
 	{
 		Name:  "Emin Muhammadi",
@@ -33,6 +41,7 @@ const banner = `
 |_| |_| |_| \___||_| |_| |_| \___|\__,_| \___||_| |_| \___|
 `
 
+// main is the entry point of the application.
 func main() {
 	rand.Seed(time.Now().UnixNano())
 

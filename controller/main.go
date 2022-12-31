@@ -10,18 +10,22 @@ import (
 	"gorm.io/gorm"
 )
 
+// Cache is a struct that represents the request body.
 type CacheReq struct {
 	Value string `json:"value" xml:"value" form:"value" validate:"required,min=1"`
 }
 
+// ErrorResponse is a struct that represents the error response.
 type ErrorResponse struct {
 	FailedField string
 	Tag         string
 	Value       string
 }
 
+// validate is a validator instance.
 var validate = validator.New()
 
+// Validator is a function that validates the request body.
 func Validator(cache *CacheReq) []*ErrorResponse {
 	var errors []*ErrorResponse
 	err := validate.Struct(cache)
@@ -37,6 +41,7 @@ func Validator(cache *CacheReq) []*ErrorResponse {
 	return errors
 }
 
+// Create is a function that creates the cache in the database.
 func Create(db *gorm.DB, ctx *fiber.Ctx) (string, error) {
 	req := new(CacheReq)
 
@@ -64,6 +69,7 @@ func Create(db *gorm.DB, ctx *fiber.Ctx) (string, error) {
 	return cache.ID, nil
 }
 
+// Update is a function that updates the cache in the database.
 func Update(id string, db *gorm.DB, ctx *fiber.Ctx) (string, error) {
 	req := new(CacheReq)
 
@@ -94,6 +100,7 @@ func Update(id string, db *gorm.DB, ctx *fiber.Ctx) (string, error) {
 	return cache.ID, nil
 }
 
+// Delete is a function that deletes the cache from the database.
 func Delete(id string, db *gorm.DB, ctx *fiber.Ctx) error {
 	if id == "" {
 		return fmt.Errorf("id is required")
@@ -110,6 +117,7 @@ func Delete(id string, db *gorm.DB, ctx *fiber.Ctx) error {
 	return nil
 }
 
+// GetValue is a function that gets the cache from the database.
 func GetValue(id string, db *gorm.DB, ctx *fiber.Ctx) (string, error) {
 	if id == "" {
 		return "", fmt.Errorf("id is required")

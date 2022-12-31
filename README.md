@@ -3,7 +3,6 @@
 [![Codacy Security Scan](https://github.com/eminmuhammadi/memcache/actions/workflows/codacy.yml/badge.svg?branch=main)](https://github.com/eminmuhammadi/memcache/actions/workflows/codacy.yml)
 [![CodeQL](https://github.com/eminmuhammadi/memcache/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/eminmuhammadi/memcache/actions/workflows/codeql.yml)
 
-
 Fast, simple, in-memory key-value caching using HTTP/HTTPS.
 
 Note: All values are stored as strings in utf-8 encoding.
@@ -86,6 +85,6 @@ curl -L -X PUT '127.0.0.1:8080/45620163-14d5-49c9-9e64-76f97006efea' \
 
 Following metrics are available:
 
-- `<protocol>://<ip>:<port>/_/metrics` - Prometheus metrics
-- `<protocol>://<ip>:<port>/_/healthcheck` - Health check
-- `<protocol>://<ip>:<port>/_/monitoring` - Monitoring (OS Information, Memory, CPU, etc.)
+- Prometheus metrics: `<protocol>://<ip>:<port>/_/metrics`
+- Health check: `<protocol>://<ip>:<port>/_/healthcheck`
+- Monitoring (OS Information, Memory, CPU, etc.): `<protocol>://<ip>:<port>/_/monitoring`

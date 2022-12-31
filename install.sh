@@ -2,7 +2,7 @@
 
 BUILD_TIME=$(date +%Y%m%d%H%M%S)
 BUILD_ID=$(git rev-parse HEAD)
-VERSION="1.0.1"
+VERSION="1.0.2"
 
 go get -u && \
 go mod tidy && \

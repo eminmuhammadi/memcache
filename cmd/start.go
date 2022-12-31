@@ -12,6 +12,7 @@ import (
 	"github.com/urfave/cli"
 )
 
+// Start starts the memcache server.
 func Start() cli.Command {
 	return cli.Command{
 		Name:  "start",
@@ -159,16 +160,13 @@ func Start() cli.Command {
 				config.DefaultConfig.SetConcurrency(concurrency)
 			}
 
-			if err := StartServer(secure, hostname, port, certFile, keyFile); err != nil {
-				return err
-			}
-
-			return nil
+			return startServer(secure, hostname, port, certFile, keyFile)
 		},
 	}
 }
 
-func StartServer(secure bool, hostname string, port string, certFile string, keyFile string) error {
+// Starts the server
+func startServer(secure bool, hostname string, port string, certFile string, keyFile string) error {
 	db, err := _dbPackage.Open()
 	if err != nil {
 		return err
@@ -193,15 +191,19 @@ func StartServer(secure bool, hostname string, port string, certFile string, key
 	}()
 
 	// Wait for interrupt signal to gracefully shutdown the server
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	ctx := make(chan os.Signal, 10)
+	signal.Notify(ctx, os.Interrupt, syscall.SIGTERM)
 
-	<-c
-	app.Shutdown()
+	_signal := <-ctx
+	println(fmt.Sprintf("%s Received %q signal", _dbPackage.TimeNowString(), _signal))
 
-	println(fmt.Sprintf("%s Memcache is shutting down", _dbPackage.TimeNowString()))
+	if _signal == os.Interrupt || _signal == syscall.SIGTERM {
+		app.Shutdown()
 
-	_dbPackage.Close(db)
+		println(fmt.Sprintf("%s Memcache is shutting down", _dbPackage.TimeNowString()))
+
+		_dbPackage.Close(db)
+	}
 
 	return nil
 }
